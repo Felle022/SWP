@@ -21,7 +21,7 @@ dic={}
 for i in range(45):
     dic[i+1]=0
 
-print(dic[1])
+print(dic[1]+ "dslfkjsldkfjdslkfjdslkfjdslk")
 
 for x in range(1000):
     zahlen = Lotto_Ziehen(Zahlen)
