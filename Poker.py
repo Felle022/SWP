@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 12... K
 '''
 
+highest_street = False
 
 def draw_hand_crad(count):
     cards=np.arange(1,53)
@@ -29,8 +30,9 @@ def draw_hand_crad(count):
     hand = np.zeros((2, 5))
 
     for x in range(len(drawn_cards)):
-       hand[0][x]=drawn_cards[x]//12
+       hand[0][x]=drawn_cards[x]//13
        hand[1][x] = drawn_cards[x] % 13
+
     return hand
 
 def check_pairs(hand):
@@ -72,20 +74,29 @@ def check(cards,length,str_answer):
     return str_answer
 
 def check_street(hand):
-    hand.sort
+    hand.sort()
     cards=[]
+    global highest_street
+    highest_street=False
     for x in range(len(hand[1])):cards.append(hand[1][x])
     lastcard=cards[0]-1
+    if cards ==[0,9,10,11,12]:highest_street=True
     for card in cards:
-        if card==lastcard+1 or lastcard+card==9:
+        if card==lastcard+1:
             lastcard=card
-        else: return ''
+        else:
+            return ''
     return 'straight'
 
 def check_flush(hand):
-    hand.sort
+    hand.sort()
     suits=[]
+    global highest_street
     for x in range(len(hand[0])): suits.append(hand[0][x])
+    if suits.count(suits[0]) == 5 and highest_street==True:
+        print(hand)
+        print('------------')
+        return 'royal flush'
     if suits.count(suits[0]) == 5:
         return 'flush'
     return ''
@@ -100,20 +111,35 @@ dic={
     'fullhouse':0,
     'quads':0,
     'straightflush':0,
+    'royal flush':0
 
 
+}
+#Possibilities for 5card-Poker
+posibilities={
+    '':50.1177,
+    'pair':42.2569,
+    'two-pair':4.7539,
+    'three of a kind':2.1128,
+    'straight':0.3925,
+    'flush':0.1965,
+    'fullhouse':0.1441,
+    'quads':0.02401,
+    'straightflush':0.00139,
+    'royal flush':0.000154
 }
 
 def possibility(dic,turns):
 
     for x in range(turns):
         hand = draw_hand_crad(5)
-        combination = check_pairs(hand) + check_street(hand) + check_flush(hand)
+        combination = check_street(hand) + check_flush(hand)+check_pairs(hand)
+        if(combination == 'straightroyal flush'):combination='royal flush'
         dic[combination]=dic[combination]+1
     for x in dic:
         dic[x]=dic[x]/turns*100
     return dic
 
 
-print(possibility(dic,1000000))
+#print(possibility(dic,1000000))
 
