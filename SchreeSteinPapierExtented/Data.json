@@ -1,0 +1,10 @@
+{
+  "Player": 2,
+  "Computer": 1,
+  "Draw": 0,
+  "Rock": 1,
+  "Paper": 0,
+  "Scissors": 1,
+  "Spock": 0,
+  "Lizard": 1
+}

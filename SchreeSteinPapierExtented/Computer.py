@@ -9,4 +9,4 @@ class Computer(Player):
         super().__init__(name)
 
     def option(self):
-        return randint(0, 4)
+        return randint(1, 5)

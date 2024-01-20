@@ -6,8 +6,8 @@ class Player:
         try:
             incorrectinsert=True
             while incorrectinsert:
-                option=int(input("Choose Option:"))
-                if option in range(0,5):
+                option=int(input("Choose Option( (1)Schere, (2)Stein, (3)Papier, (4)Echse, (5)Spock:):"))
+                if option in range(0,6):
                     return option
                 else:
                     print("Eingabe ungültig")
