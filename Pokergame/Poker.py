@@ -1,4 +1,6 @@
 import random
+import time
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -134,6 +136,17 @@ posibilities = {
 }
 
 
+def my_decorator(func):
+    print("HALLO")
+
+    def wrapper(dic1, turns):
+        print("Wrapper")
+        zeitanfang = time.time()
+        print(func(dic1,turns))
+        zeitende = time.time()
+        print(f"Dauer Programmausführung:{zeitende - zeitanfang}")
+    return wrapper
+
 def possibility(dic, turns):
     for x in range(turns):
         hand = draw_hand_crad(5)
@@ -156,6 +169,8 @@ def plot_diagramm(dic1, dic2):
     plt.show()
 
 
-print(possibility(dic, 1000000))
+my_decorator(possibility)(dic,100)
 
-#plot_diagramm(dic, posibilities)
+
+# print(possibility(dic, 1000000))
+# plot_diagramm(dic, posibilities)

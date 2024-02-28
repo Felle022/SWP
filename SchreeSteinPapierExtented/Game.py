@@ -1,8 +1,9 @@
 from Spieler import Player
 from Computer import Computer
-
+import requests
 import json
 
+url='http://127.0.0.1:5000/'
 def game():
     options = {1: 'Rock', 2: 'Paper', 3: 'Scissors', 4: 'Spock', 5: 'Lizard'}
     game=True
@@ -21,17 +22,26 @@ def game():
             data_dic["Player"]=data_dic["Player"]+1
             data_dic[options[option]]=data_dic[options[option]]+1
             export_data(data_dic)
+            #Erzeugen eines dics für DB
+            stats={"winner":"Player","winnerSymbol":options[option]}
+            export_data2(stats)
         elif winner==2:
             print(f"{c.name} hat gewonnen mit {options[option2]}")
             print(f"{p.name}: {options[option]}")
             data_dic["Computer"] = data_dic["Computer"] + 1
             data_dic[options[option]] = data_dic[options[option]] + 1
             export_data(data_dic)
+            # Erzeugen eines dics für DB
+            stats = {"winner":"Computer", "winnerSymbol": options[option2]}
+            export_data2(stats)
         elif winner==0:
             print("Draw")
             data_dic["Draw"] = data_dic["Draw"] + 1
             data_dic[options[option]] = data_dic[options[option]] + 1
             export_data(data_dic)
+            # Erzeugen eines dics für DB
+            stats = {"winner": "Draw", "winnerSymbol":"null"}
+            export_data2(stats)
         con=input("Continue:Y/N")
         if con == "N" or c=="n":
             game= False
@@ -68,6 +78,10 @@ def check_inputs(option1,option2):
 def export_data(data):
     with open('Data.json', 'w') as datei:
         json.dump(data, datei, indent=2, ensure_ascii=False)
+
+def export_data2(stats):
+    res = requests.post(url+'/stats', json=stats)
+    print(res.text)
 
 def get_data():
     with open('Data.json', 'r') as datei:
