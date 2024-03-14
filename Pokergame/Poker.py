@@ -137,8 +137,6 @@ posibilities = {
 
 
 def my_decorator(func):
-    print("HALLO")
-
     def wrapper(dic1, turns):
         print("Wrapper")
         zeitanfang = time.time()
